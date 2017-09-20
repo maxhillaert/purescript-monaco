@@ -1,0 +1,25 @@
+{
+  "name": "purescript-monaco",
+  "version": "0.0.1",
+  "description": "Monaco Editor bindings for purescript",
+  "main": "index.js",
+  "directories": {
+    "example": "example",
+    "test": "test"
+  },
+  "scripts": {
+    "build": "pulp browserify --include example/src --to public/build.js",
+    "serve": "node script/serve.js",
+    "ide": "purs ide server"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "express": "^4.15.4"
+  },
+  "dependencies": {
+    "pulp": "^11.0.2",
+    "purescript": "^0.11.6",
+    "purescript-psa": "^0.5.1"
+  }
+}

@@ -1,0 +1,9 @@
+/output/
+/node_modules/
+/bower_components/
+/tmp/
+/dist/
+public/*.js
+.psci_modules
+.psci
+.psc-ide-port

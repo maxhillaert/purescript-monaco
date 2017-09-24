@@ -21,6 +21,9 @@ script inclusion in your html file, and a pretty ugly global variable. Hopefully
 ## Building And Running Examples
 
 ```bash
+git clone https://github.com/maxhillaert/purescript-monaco.git
+npm install
+bower install
 npm run build
 npm run serve
 ```

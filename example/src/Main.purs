@@ -15,7 +15,7 @@ import Control.Monad.Eff.Console
 import Debug.Trace
 
 main
-  ∷ ∀ e
+  ∷ forall e
   . Eff ( dom ∷ DOM
         , exception ∷ EXCEPTION, exception ∷ EXCEPTION
         | e )

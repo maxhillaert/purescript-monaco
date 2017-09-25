@@ -21,19 +21,19 @@ import DOM.Node.Types (ElementId)
 import Partial.Unsafe (unsafePartial)
 
 getElementById
-  ∷ ∀ eff
+  ∷ forall eff
   . ElementId
-  → Eff (dom ∷ DOM | eff) (Maybe HTMLElement)
+  -> Eff (dom ∷ DOM | eff) (Maybe HTMLElement)
 getElementById elementId = do
-  win ← window
-  doc ← document win
-  el ← NEPN.getElementById elementId (htmlDocumentToNonElementParentNode doc)
+  win <- window
+  doc <- document win
+  el <- NEPN.getElementById elementId (htmlDocumentToNonElementParentNode doc)
   pure $ either (const Nothing) Just $ runExcept $ readHTMLElement (toForeign <<< unsafePartial fromJust $ el)
 
 onLoad
-  ∷ ∀ eff a
+  ∷ forall eff a
   . Eff (dom ∷ DOM | eff) a
-  → Eff (dom ∷ DOM | eff) Unit
+  -> Eff (dom ∷ DOM | eff) Unit
 onLoad handler =
   addEventListener load (eventListener (const handler)) false
     <<< windowToEventTarget

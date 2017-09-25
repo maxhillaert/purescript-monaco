@@ -15,9 +15,9 @@ import Debug.Trace as DT
 import Monaco.Editor as ME
 import Monaco.Types
 
-editor ∷ ∀ e. Aff (dom ∷ DOM, exception ∷ EXCEPTION |e) Unit
+editor ∷ forall e. Aff (dom ∷ DOM, exception ∷ EXCEPTION |e) Unit
 editor = do
-  mbEl ← liftEff (U.getElementById $ ElementId "line")
+  mbEl <- liftEff (U.getElementById $ ElementId "line")
   case mbEl of
     Nothing -> DT.traceAnyA "There is no element with line id"
     Just el -> do

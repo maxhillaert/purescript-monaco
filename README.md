@@ -1,7 +1,7 @@
 # purescript-monaco
 
-[![Latest release](http://img.shields.io/github/release/purescript/purescript-monaco.svg)](https://github.com/purescript/purescript-foreign/releases)
-[![Build status](https://travis-ci.org/purescript/purescript-foreign.svg?branch=master)](https://travis-ci.org/purescript/purescript-foreign)
+[![Latest release](http://img.shields.io/github/release/purescript/purescript-monaco.svg)](https://github.com/maxhillaert/purescript-monaco/releases)
+[![Build status](https://travis-ci.org/purescript/purescript-foreign.svg?branch=master)](https://travis-ci.org/maxhillaert/purescript-monaco)
 
 Purescript bindings for the Monaco Editor.
 

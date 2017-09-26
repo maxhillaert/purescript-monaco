@@ -13,7 +13,7 @@ import DOM.Node.Types (ElementId(..))
 import Data.Maybe (Maybe(..))
 import Debug.Trace as DT
 import Monaco.Editor as ME
-import Monaco.Types
+import Monaco.Types as MT
 
 editor ∷ forall e. Aff (dom ∷ DOM, exception ∷ EXCEPTION |e) Unit
 editor = do
@@ -22,10 +22,10 @@ editor = do
     Nothing -> DT.traceAnyA "There is no element with line id"
     Just el -> do
       let options = 
-            EditorOptions {
-                value : "function x() {\n\tconsole.log(\"Hello world!\");\n}",
-                language : "javascript"
-            }
+                  MT.defaultConstuctorOptions 
+                  { value = Just "function x() {\n\tconsole.log(\"Hello world!\");\n}" 
+                  , language = Just "javascript"
+                  }
       ch <- ME.create options el
       pure unit
   

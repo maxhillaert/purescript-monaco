@@ -6,6 +6,8 @@ import Data.Record (unionMerge)
 
 foreign import data Editor ∷ Type
 
+
+
 newtype FontWeight = FontWeight String
 
 fontWeightNormal :: FontWeight
@@ -169,7 +171,7 @@ type EditorOptionsMixin a = {
     -}
     rulers :: Maybe (Array Number),
     {-
-    A string containing the word separators used when doing word navigation.
+    A String containing the word separators used when doing word navigation.
     Defaults to `~!@#$%^&*()-=+[{]}\\|;:\'",.<>/?
     -}
     wordSeparators :: Maybe String,
@@ -179,20 +181,20 @@ type EditorOptionsMixin a = {
     -}
     selectionClipboard :: Maybe Boolean,
     {-
-    Control the rendering of line numbers.
-    If it is a function, it will be invoked when rendering a line number and the return value will be rendered.
-    Otherwise, if it is a truey, line numbers will be rendered normally (equivalent of using an identity function).
-    Otherwise, line numbers will not be rendered.
+    Control the rendering of line Numbers.
+    If it is a function, it will be invoked when rendering a line Number and the return value will be rendered.
+    Otherwise, if it is a truey, line Numbers will be rendered normally (equivalent of using an identity function).
+    Otherwise, line Numbers will not be rendered.
     Defaults to true.
     -}
     lineNumbers :: Maybe LineNumbers,
     {-
-    Should the corresponding line be selected when clicking on the line number?
+    Should the corresponding line be selected when clicking on the line Number?
     Defaults to true.
     -}
     selectOnLineNumbers :: Maybe Boolean,
     {-
-    Control the width of line numbers, by reserving horizontal space for rendering at least an amount of digits.
+    Control the width of line Numbers, by reserving horizontal space for rendering at least an amount of digits.
     Defaults to 5.
     -}
     lineNumbersMinChars :: Maybe Number,
@@ -203,8 +205,8 @@ type EditorOptionsMixin a = {
     glyphMargin :: Maybe Boolean,
     {-
     The width reserved for line decorations (in px).
-    Line decorations are placed between line numbers and the editor content.
-    You can pass in a string in the format floating point followed by "ch". e.g. 1.3ch.
+    Line decorations are placed between line Numbers and the editor content.
+    You can pass in a String in the format floating point followed by "ch". e.g. 1.3ch.
     Defaults to 10.
     -}
     lineDecorationsWidth :: Maybe (Either Number String),
@@ -230,26 +232,25 @@ type EditorOptionsMixin a = {
     readOnly :: Maybe Boolean,
     {-
     Control the behavior and rendering of the scrollbars.
-    TODO: Implement
     -}
-    --scrollbar?: IEditorScrollbarOptions;
+    scrollbar :: Maybe EditorScrollbarOptions,
     {-
     Control the behavior and rendering of the minimap.
     TODO: Implement
     -}
-    --minimap?: IEditorMinimapOptions;
+    --minimap :: Maybe IEditorMinimapOptions;
     {-
     Control the behavior of the find widget.
     TODO: Implement
     -}
-    --find?: IEditorFindOptions;
+    --find :: Maybe IEditorFindOptions;
     {-
     Display overflow widgets as `fixed`.
     Defaults to `false`.
     -}
     fixedOverflowWidgets :: Maybe Boolean,
     {-
-    The number of vertical lanes the overview ruler should render.
+    The Number of vertical lanes the overview ruler should render.
     Defaults to 2.
     -}
     overviewRulerLanes :: Maybe Number,
@@ -581,6 +582,7 @@ defaultOptions =
     , roundedSelection: Nothing
     , extraEditorClassName: Nothing
     , readOnly: Nothing
+    , scrollbar: Nothing
     , fixedOverflowWidgets: Nothing
     , overviewRulerLanes: Nothing
     , overviewRulerBorder: Nothing
@@ -642,3 +644,63 @@ defaultOptions =
     , letterSpacing: Nothing
     } 
 
+
+type EditorScrollbarOptions = {
+    {-
+        * The size of arrows (if displayed).
+        * Defaults to 11.
+        -}
+    arrowSize :: Maybe Number,
+    {-
+        * Render vertical scrollbar.
+        * Accepted values: 'auto', 'visible', 'hidden'.
+        * Defaults to 'auto'.
+        -}
+    vertical :: Maybe String,
+    {-
+        * Render horizontal scrollbar.
+        * Accepted values: 'auto', 'visible', 'hidden'.
+        * Defaults to 'auto'.
+    -}
+    horizontal :: Maybe String,
+    {-
+        * Cast horizontal and vertical shadows when the content is scrolled.
+        * Defaults to true.
+    -}
+    useShadows :: Maybe Boolean,
+    {-
+        * Render arrows at the top and bottom of the vertical scrollbar.
+        * Defaults to false.
+    -}
+    verticalHasArrows :: Maybe Boolean,
+    {-
+        * Render arrows at the left and right of the horizontal scrollbar.
+        * Defaults to false.
+    -}
+    horizontalHasArrows :: Maybe Boolean,
+    {-
+        * Listen to mouse wheel events and react to them by scrolling.
+        * Defaults to true.
+    -}
+    handleMouseWheel :: Maybe Boolean,
+    {-
+        * Height in pixels for the horizontal scrollbar.
+        * Defaults to 10 (px).
+    -}
+    horizontalScrollbarSize :: Maybe Number,
+    {-
+        * Width in pixels for the vertical scrollbar.
+        * Defaults to 10 (px).
+    -}
+    verticalScrollbarSize :: Maybe Number,
+    {-
+        * Width in pixels for the vertical slider.
+        * Defaults to `verticalScrollbarSize`.
+    -}
+    verticalSliderSize :: Maybe Number,
+    {-
+        * Height in pixels for the horizontal slider.
+        * Defaults to `horizontalScrollbarSize`.
+    -}
+    horizontalSliderSize :: Maybe Number
+}

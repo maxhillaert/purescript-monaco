@@ -23,6 +23,8 @@ editor = do
   case mbEl of
     Nothing -> pure unit
     Just el -> do
+ 
+                                  
       let options = MT.defaultConstuctorOptions 
                     { value = Just "function x() {\n\tconsole.log(\"Hello world!\");\n}" 
                     , language = Just "javascript"
@@ -40,6 +42,18 @@ editor = do
                     , roundedSelection = Nothing
                     , extraEditorClassName = Nothing
                     , readOnly = Nothing
+                    , scrollbar = Just  { arrowSize : Just 30.0
+                                        , vertical : Just "visible"
+                                        , horizontal : Just "visible"
+                                        , useShadows : Just true
+                                        , verticalHasArrows : Just true
+                                        , horizontalHasArrows : Just true
+                                        , handleMouseWheel : Just true
+                                        , horizontalScrollbarSize : Nothing
+                                        , verticalScrollbarSize : Nothing
+                                        , verticalSliderSize : Nothing
+                                        , horizontalSliderSize : Nothing
+                                        }
                     , fixedOverflowWidgets = Nothing
                     , overviewRulerLanes = Nothing
                     , overviewRulerBorder = Nothing

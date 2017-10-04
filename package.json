@@ -8,7 +8,9 @@
     "test": "test"
   },
   "scripts": {
-    "build": "pulp browserify --include example/src --to public/build.js",
+    "editorbasic": "pulp browserify --include example/src --main EditorBasic --to public/editorbasic.js",
+    "editoroptions": "pulp browserify --include example/src --main EditorOptions --to public/editoroptions.js",
+    "build": "npm run editorbasic && npm run editoroptions",
     "serve": "node script/serve.js",
     "ide": "purs ide server"
   },

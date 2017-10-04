@@ -1,4 +1,6 @@
 const JustObjName = "Just"
+const LeftObjName = "Left"
+const RightObjName = "Right"
 
 mapMaybes = function(options) {
     var newObj = {}
@@ -7,10 +9,18 @@ mapMaybes = function(options) {
         var newValue = undefined
         if(propValue.constructor.name == JustObjName) {
             newValue = propValue["value0"]
+            if(newValue.constructor.name == LeftObjName
+            || newValue.constructor.name == RightObjName) {
+                newValue = newValue["value0"]
+            }
             newObj[prop] = newValue
         }
     }
     return newObj
+}
+
+mapEither = function(options) {
+
 }
 
 // Monaco editor uses AMD loader, which means you can't use require to get it to work

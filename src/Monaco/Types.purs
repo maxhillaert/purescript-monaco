@@ -1,14 +1,8 @@
 module Monaco.Types where 
 
-import Prelude
-import Control.Monad.Eff
-import Data.Either
-import Data.Function
-import Data.Maybe
-import Debug.Trace
-import Data.Record
-import DOM.HTML.HTMLDataListElement (options)
-import Data.Interval.Duration.Iso (Error(..))
+import Data.Either (Either(..))
+import Data.Maybe (Maybe(..))
+import Data.Record (unionMerge)
 
 foreign import data Editor ∷ Type
 
@@ -148,6 +142,20 @@ renderHighLightLine = RenderHighLight "line"
 renderHighLightAll :: RenderHighLight
 renderHighLightAll = RenderHighLight "all"
 
+type LineNumberFunction = Number -> String
+
+newtype LineNumbers = LineNumbers (Either String LineNumberFunction)
+lineNumbersOn :: LineNumbers
+lineNumbersOn = LineNumbers (Left "on")
+
+lineNumbersOff :: LineNumbers
+lineNumbersOff = LineNumbers (Left "off")
+
+lineNumbersRelative:: LineNumbers
+lineNumbersRelative = LineNumbers (Left "relative")
+
+lineNumberFunction :: LineNumberFunction -> LineNumbers
+lineNumberFunction f = LineNumbers (Right f)
  
 
 type EditorOptionsMixin a = {
@@ -176,9 +184,8 @@ type EditorOptionsMixin a = {
     Otherwise, if it is a truey, line numbers will be rendered normally (equivalent of using an identity function).
     Otherwise, line numbers will not be rendered.
     Defaults to true.
-    TODO: Not Implemented
     -}
-    --lineNumbers?: 'on' | 'off' | 'relative' | ((lineNumber: number) => string);
+    lineNumbers :: Maybe LineNumbers,
     {-
     Should the corresponding line be selected when clicking on the line number?
     Defaults to true.
@@ -565,6 +572,7 @@ defaultOptions =
     , rulers: Nothing
     , wordSeparators: Nothing
     , selectionClipboard: Nothing
+    , lineNumbers: Nothing
     , selectOnLineNumbers: Nothing
     , lineNumbersMinChars: Nothing
     , glyphMargin: Nothing

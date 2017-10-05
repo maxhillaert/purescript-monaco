@@ -43,8 +43,8 @@ editor = do
                     , extraEditorClassName = Nothing
                     , readOnly = Nothing
                     , scrollbar = Just  { arrowSize : Just 30.0
-                                        , vertical : Just scrollbarVisibilityVisible
-                                        , horizontal : Just scrollbarVisibilityVisible
+                                        , vertical : Just MT.scrollbarVisibilityVisible
+                                        , horizontal : Just MT.scrollbarVisibilityVisible
                                         , useShadows : Just true
                                         , verticalHasArrows : Just true
                                         , horizontalHasArrows : Just true
@@ -58,6 +58,9 @@ editor = do
                                         , showSlider : Just showSliderAlways
                                         , renderCharacters : Just false
                                         , maxColumn : Just 60
+                                        }
+                    , find = Just       { seedSearchStringFromSelection : Just false
+                                        , autoFindInSelection : Just true
                                         }
                     , fixedOverflowWidgets = Nothing
                     , overviewRulerLanes = Nothing

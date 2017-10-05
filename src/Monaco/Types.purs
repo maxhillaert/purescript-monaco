@@ -1,4 +1,75 @@
-module Monaco.Types where 
+module Monaco.Types 
+( Editor
+, FontWeight
+, fontWeightNormal
+, fontWeightBold
+, fontWeightBolder
+, fontWeightLighter
+, fontWeightInitial
+, fontWeightInherit
+, fontWeight100
+, fontWeight200
+, fontWeight300
+, fontWeight400
+, fontWeight500
+, fontWeight600
+, fontWeight700
+, fontWeight800
+, fontWeight900
+, WordWrapState
+, wordwrapOff
+, wordwrapOn
+, wordwrapColumn
+, wordwrapBounded
+, MultiCursorModifier
+, ctrlCmd
+, alt
+, AccessibilitySupport
+, accessibilitySupportOn
+, accessibilitySupportOff
+, accessibilitySupportAuto
+, AcceptSuggestion
+, acceptSuggestionOn
+, acceptSuggestionOff
+, acceptSuggestionSmart
+, SnippetSuggestion
+, snippetSuggestionTop
+, snippetSuggestionBottom
+, snippetSuggestionInline
+, snippetSuggestionNone
+, ShowFoldingControls
+, showFoldingControlsAlways
+, showFoldingControlsMouseOver
+, RenderWhiteSpace
+, renderWhiteSpaceNone
+, renderWhiteSpaceBoundary
+, renderWhiteSpaceAll
+, RenderHighLight
+, renderHighLightNone
+, renderHighLightGutter
+, renderHighLightLine
+, renderHighLightAll
+, LineNumberFunction
+, LineNumbers
+, lineNumbersOn
+, lineNumbersOff
+, lineNumbersRelative
+, lineNumberFunction
+, EditorOptionsMixin
+, EditorConstructionOptions
+, EditorScrollbarOptions
+, ShowSlider
+, showSliderAlways
+, showSliderMouseOver
+, ScrollbarVisibility
+, scrollbarVisibilityAuto
+, scrollbarVisibilityHidden
+, scrollbarVisibilityVisible
+, EditorMinimapOptions
+, EditorFindOptions
+, defaultConstuctorOptions
+)
+where 
 
 import Data.Either (Either(..))
 import Data.Maybe (Maybe(..))
@@ -240,9 +311,8 @@ type EditorOptionsMixin a = {
     minimap :: Maybe EditorMinimapOptions,
     {-
     Control the behavior of the find widget.
-    TODO: Implement
     -}
-    --find :: Maybe IEditorFindOptions;
+    find :: Maybe EditorFindOptions,
     {-
     Display overflow widgets as `fixed`.
     Defaults to `false`.
@@ -583,6 +653,7 @@ defaultOptions =
     , readOnly: Nothing
     , scrollbar: Nothing
     , minimap : Nothing
+    , find : Nothing
     , fixedOverflowWidgets: Nothing
     , overviewRulerLanes: Nothing
     , overviewRulerBorder: Nothing
@@ -714,6 +785,22 @@ type EditorScrollbarOptions = {
     horizontalSliderSize :: Maybe Number
 }
 
+
+defaultEditorScrollbarOptions :: EditorScrollbarOptions
+defaultEditorScrollbarOptions = {
+    arrowSize : Nothing,
+    vertical : Nothing,
+    horizontal : Nothing,
+    useShadows : Nothing,
+    verticalHasArrows : Nothing,   
+    horizontalHasArrows : Nothing, 
+    handleMouseWheel : Nothing,
+    horizontalScrollbarSize : Nothing,
+    verticalScrollbarSize : Nothing,
+    verticalSliderSize : Nothing,
+    horizontalSliderSize : Nothing
+}
+
 newtype ShowSlider = ShowSlider String
 
 showSliderAlways :: ShowSlider
@@ -744,3 +831,23 @@ type EditorMinimapOptions = {
         -}
     maxColumn :: Maybe Int
 }
+
+defaultMinimapOptions :: EditorMinimapOptions
+defaultMinimapOptions = {
+    enabled : Nothing,
+    showSlider : Nothing,
+    renderCharacters: Nothing,
+    maxColumn: Nothing
+}
+
+type EditorFindOptions = {
+    {-
+        * Controls if we seed search string in the Find Widget with editor selection.
+    -}
+    seedSearchStringFromSelection :: Maybe Boolean,
+    {-
+        * Controls if Find in Selection flag is turned on when multiple lines of text are selected in the editor.
+    -}
+    autoFindInSelection :: Maybe Boolean
+}
+

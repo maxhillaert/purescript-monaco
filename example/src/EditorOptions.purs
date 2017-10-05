@@ -1,6 +1,8 @@
 module EditorOptions 
 where
   
+import Monaco.Types
+
 import Control.Monad.Aff (Aff)
 import Control.Monad.Aff (runAff)
 import Control.Monad.Eff (Eff)
@@ -8,10 +10,10 @@ import Control.Monad.Eff.Class (liftEff)
 import Control.Monad.Eff.Exception (EXCEPTION)
 import Control.Monad.Eff.Exception (EXCEPTION, Error)
 import DOM (DOM)
+import DOM.Event.TouchEvent (targetTouches)
 import DOM.Node.Types (ElementId(..))
 import Data.Maybe (Maybe(..))
 import Monaco.Editor as ME
-import Monaco.Types (lineNumberFunction, lineNumbersOff, lineNumbersOn, lineNumbersRelative)
 import Monaco.Types as MT
 import Prelude (Unit, bind, pure, unit, ($))
 import Utils as U
@@ -22,9 +24,7 @@ editor = do
   mbEl <- liftEff (U.getElementById $ ElementId "line")
   case mbEl of
     Nothing -> pure unit
-    Just el -> do
- 
-                                  
+    Just el -> do                                 
       let options = MT.defaultConstuctorOptions 
                     { value = Just "function x() {\n\tconsole.log(\"Hello world!\");\n}" 
                     , language = Just "javascript"
@@ -43,8 +43,8 @@ editor = do
                     , extraEditorClassName = Nothing
                     , readOnly = Nothing
                     , scrollbar = Just  { arrowSize : Just 30.0
-                                        , vertical : Just "visible"
-                                        , horizontal : Just "visible"
+                                        , vertical : Just scrollbarVisibilityVisible
+                                        , horizontal : Just scrollbarVisibilityVisible
                                         , useShadows : Just true
                                         , verticalHasArrows : Just true
                                         , horizontalHasArrows : Just true
@@ -53,6 +53,11 @@ editor = do
                                         , verticalScrollbarSize : Nothing
                                         , verticalSliderSize : Nothing
                                         , horizontalSliderSize : Nothing
+                                        }
+                    , minimap = Just    { enabled : Just true 
+                                        , showSlider : Just showSliderAlways
+                                        , renderCharacters : Just false
+                                        , maxColumn : Just 60
                                         }
                     , fixedOverflowWidgets = Nothing
                     , overviewRulerLanes = Nothing

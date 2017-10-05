@@ -236,9 +236,8 @@ type EditorOptionsMixin a = {
     scrollbar :: Maybe EditorScrollbarOptions,
     {-
     Control the behavior and rendering of the minimap.
-    TODO: Implement
     -}
-    --minimap :: Maybe IEditorMinimapOptions;
+    minimap :: Maybe EditorMinimapOptions,
     {-
     Control the behavior of the find widget.
     TODO: Implement
@@ -583,6 +582,7 @@ defaultOptions =
     , extraEditorClassName: Nothing
     , readOnly: Nothing
     , scrollbar: Nothing
+    , minimap : Nothing
     , fixedOverflowWidgets: Nothing
     , overviewRulerLanes: Nothing
     , overviewRulerBorder: Nothing
@@ -644,6 +644,15 @@ defaultOptions =
     , letterSpacing: Nothing
     } 
 
+newtype ScrollbarVisibility = ScrollbarVisibility String
+scrollbarVisibilityAuto :: ScrollbarVisibility
+scrollbarVisibilityAuto = ScrollbarVisibility "auto"
+
+scrollbarVisibilityVisible :: ScrollbarVisibility
+scrollbarVisibilityVisible = ScrollbarVisibility "visible"
+
+scrollbarVisibilityHidden :: ScrollbarVisibility
+scrollbarVisibilityHidden = ScrollbarVisibility "hidden"
 
 type EditorScrollbarOptions = {
     {-
@@ -656,13 +665,13 @@ type EditorScrollbarOptions = {
         * Accepted values: 'auto', 'visible', 'hidden'.
         * Defaults to 'auto'.
         -}
-    vertical :: Maybe String,
+    vertical :: Maybe ScrollbarVisibility,
     {-
         * Render horizontal scrollbar.
         * Accepted values: 'auto', 'visible', 'hidden'.
         * Defaults to 'auto'.
     -}
-    horizontal :: Maybe String,
+    horizontal :: Maybe ScrollbarVisibility,
     {-
         * Cast horizontal and vertical shadows when the content is scrolled.
         * Defaults to true.
@@ -703,4 +712,35 @@ type EditorScrollbarOptions = {
         * Defaults to `horizontalScrollbarSize`.
     -}
     horizontalSliderSize :: Maybe Number
+}
+
+newtype ShowSlider = ShowSlider String
+
+showSliderAlways :: ShowSlider
+showSliderAlways = ShowSlider "always"
+
+showSliderMouseOver :: ShowSlider
+showSliderMouseOver = ShowSlider "mouseover"
+
+type EditorMinimapOptions = {
+    {-
+    * Enable the rendering of the minimap.
+    * Defaults to false.
+    -}
+    enabled :: Maybe Boolean,
+    {-
+        * Control the rendering of the minimap slider.
+        * Defaults to 'mouseover'.
+        -}
+    showSlider :: Maybe ShowSlider,
+    {-
+        * Render the actual text on a line (as opposed to color blocks).
+        * Defaults to true.
+        -}
+    renderCharacters :: Maybe Boolean,
+    {-
+        * Limit the width of the minimap to render at most a certain number of columns.
+        * Defaults to 120.
+        -}
+    maxColumn :: Maybe Int
 }

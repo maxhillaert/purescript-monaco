@@ -73,7 +73,7 @@ where
 
 import Data.Either (Either(..))
 import Data.Maybe (Maybe(..))
-import Data.Record (unionMerge)
+import Data.Record.Builder
 
 foreign import data Editor ∷ Type
 
@@ -626,7 +626,7 @@ type EditorConstructionOptions =  EditorOptionsMixin (
 ) 
 
 defaultConstuctorOptions :: EditorConstructionOptions
-defaultConstuctorOptions = unionMerge baseOpts opts
+defaultConstuctorOptions = build (merge baseOpts) opts
     where 
         baseOpts = defaultOptions
         opts = {

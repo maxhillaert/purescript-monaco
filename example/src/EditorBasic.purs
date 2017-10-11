@@ -10,6 +10,7 @@ import DOM.Node.Types (ElementId(..))
 import Data.Maybe (Maybe(..))
 import Monaco.Editor as ME
 import Monaco.Types as MT
+import Monaco.Types (MONACO)
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Exception (EXCEPTION, Error)
 import Control.Monad.Aff (runAff)
@@ -17,7 +18,7 @@ import Utils as U
 
 
 
-editor ∷ forall e. Aff (dom ∷ DOM, exception ∷ EXCEPTION |e) Unit
+editor ∷ forall e. Aff (monaco :: MONACO, dom ∷ DOM, exception ∷ EXCEPTION |e) Unit
 editor = do
   mbEl <- liftEff (U.getElementById $ ElementId "line")
   case mbEl of
@@ -38,6 +39,7 @@ editor = do
 main
   ∷ forall e
   . Eff ( dom ∷ DOM
+        , monaco :: MONACO
         , exception ∷ EXCEPTION, exception ∷ EXCEPTION
         | e )
       Unit

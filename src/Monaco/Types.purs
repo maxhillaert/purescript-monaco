@@ -68,15 +68,18 @@ module Monaco.Types
 , EditorMinimapOptions
 , EditorFindOptions
 , defaultConstuctorOptions
+, MONACO
 )
 where 
 
 import Data.Either (Either(..))
 import Data.Maybe (Maybe(..))
 import Data.Record.Builder
+import Control.Monad.Eff (kind Effect)
 
 foreign import data Editor ∷ Type
 
+foreign import data MONACO :: Effect
 
 
 newtype FontWeight = FontWeight String

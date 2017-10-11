@@ -15,11 +15,12 @@ import DOM.Node.Types (ElementId(..))
 import Data.Maybe (Maybe(..))
 import Monaco.Editor as ME
 import Monaco.Types as MT
+import Monaco.Types (MONACO)
 import Prelude (Unit, bind, pure, unit, ($))
 import Utils as U
 
 
-editor ∷ forall e. Aff (dom ∷ DOM, exception ∷ EXCEPTION |e) Unit
+editor ∷ forall e. Aff (monaco :: MONACO, dom ∷ DOM, exception ∷ EXCEPTION |e) Unit
 editor = do
   mbEl <- liftEff (U.getElementById $ ElementId "line")
   case mbEl of
@@ -129,7 +130,9 @@ editor = do
 main
   ∷ forall e
   . Eff ( dom ∷ DOM
-        , exception ∷ EXCEPTION, exception ∷ EXCEPTION
+        , exception ∷ EXCEPTION
+        , exception ∷ EXCEPTION
+        , monaco :: MONACO
         | e )
       Unit
 main =  U.onLoad do 

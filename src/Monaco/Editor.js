@@ -31,7 +31,7 @@ mapMaybes = function (options) {
 
 exports.createImpl = function (options) {
     return function (el) {
-        new function () {
+        return function () {
             return new Promise(function (resolve, reject) {
                 monacoRequire.config({ paths: { 'vs': '/monaco-editor/min/vs' } });
                 monacoRequire(['vs/editor/editor.main'], function () {

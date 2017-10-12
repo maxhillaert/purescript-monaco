@@ -2,19 +2,19 @@ const JustObjName = "Just"
 const LeftObjName = "Left"
 const RightObjName = "Right"
 
-mapMaybes = function(options) {
+mapMaybes = function (options) {
     var newObj = {}
-    for(prop in options) {
+    for (prop in options) {
         var propKey = prop
         var propValue = options[prop]
         var newValue = undefined
-        if(propValue.constructor.name == JustObjName) {
+        if (propValue.constructor.name == JustObjName) {
             newValue = propValue["value0"];
-            if(newValue.constructor.name == LeftObjName
-            || newValue.constructor.name == RightObjName) {
+            if (newValue.constructor.name == LeftObjName
+                || newValue.constructor.name == RightObjName) {
                 newValue = newValue["value0"];
             }
-            else if (newValue === Object(newValue) && newValue.constructor != Array){
+            else if (newValue === Object(newValue) && newValue.constructor != Array) {
                 newValue = mapMaybes(newValue);
             }
             newObj[propKey] = newValue
@@ -29,16 +29,18 @@ mapMaybes = function(options) {
 // to its require stuff into 'var monacoRequire' which I use here.
 // I would really like to find a bette workaround, but haven't yet. Will reach out to the community.
 
-exports.createImpl = function(options) {
-    return function(el) {
-        return new Promise(function(resolve, reject) {
-            monacoRequire.config({ paths: { 'vs': '/monaco-editor/min/vs' }});
-            monacoRequire(['vs/editor/editor.main'], function() {
-            var mappedOpts = mapMaybes(options)
-            var editor = monaco.editor.create(el, mappedOpts);
-            resolve(editor);
+exports.createImpl = function (options) {
+    return function (el) {
+        new function () {
+            return new Promise(function (resolve, reject) {
+                monacoRequire.config({ paths: { 'vs': '/monaco-editor/min/vs' } });
+                monacoRequire(['vs/editor/editor.main'], function () {
+                    var mappedOpts = mapMaybes(options)
+                    var editor = monaco.editor.create(el, mappedOpts);
+                    resolve(editor);
+                });
             });
-        });
+        }
     };
 };
 

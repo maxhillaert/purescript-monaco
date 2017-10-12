@@ -1,19 +1,20 @@
 module EditorBasic where
 
-import Prelude (Unit, bind, pure, unit, ($))
-import Utils as U
 import Control.Monad.Aff (Aff)
+import Control.Monad.Aff (runAff)
+import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Class (liftEff)
 import Control.Monad.Eff.Exception (EXCEPTION)
+import Control.Monad.Eff.Exception (EXCEPTION, Error)
 import DOM (DOM)
 import DOM.Node.Types (ElementId(..))
 import Data.Maybe (Maybe(..))
+import Debug.Trace (traceAnyM, trace)
 import Monaco.Editor as ME
-import Monaco.Types as MT
 import Monaco.Types (MONACO)
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Exception (EXCEPTION, Error)
-import Control.Monad.Aff (runAff)
+import Monaco.Types as MT
+import Prelude (Unit, bind, pure, unit, ($))
+import Utils as U
 import Utils as U
 
 
@@ -32,9 +33,11 @@ editor = do
                   , fontWeight = Just MT.fontWeightBolder
                   , fontSize = Just 16.0
                   }
-      ch <- ME.create options el
+      let e = ME.create options el
+      let x = trace "Hey"
+      ch <- e
+      _ <- traceAnyM ch
       pure unit
-
 
 main
   ∷ forall e

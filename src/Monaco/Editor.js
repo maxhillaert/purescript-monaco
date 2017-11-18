@@ -33,7 +33,32 @@ exports.createImpl = function (options) {
     return function (el) {
         return function () {
             return new Promise(function (resolve, reject) {
-                monacoRequire.config({ paths: { 'vs': '/monaco-editor/min/vs' } });
+                // Check for nodejs environment (e.g. electron)
+                if(self.process != null){
+                    // make it happy for nodejs env
+                    var path = require('path');
+                    function uriFromPath(_path) {
+                        var pathName = path.resolve(_path).replace(/\\/g, '/');
+                        if (pathName.length > 0 && pathName.charAt(0) !== '/') {
+                            pathName = '/' + pathName;
+                        }
+                        return encodeURI('file://' + pathName);
+                    }
+                    
+                    monacoRequire.config({
+                        baseUrl: uriFromPath(path.join(__dirname, './monaco-editor/min'))
+                    });
+                    // workaround monaco-css not understanding the environment
+                    self.module = undefined;
+                    // workaround monaco-typescript not understanding the environment
+                    self.process.browser = true;
+                }
+                else {
+                    // make it happy for browser env
+                    monacoRequire.config({ paths: { 'vs': './monaco-editor/min/vs' } });
+                }
+              
+               
                 monacoRequire(['vs/editor/editor.main'], function () {
                     var mappedOpts = mapMaybes(options)
                     var editor = monaco.editor.create(el, mappedOpts);

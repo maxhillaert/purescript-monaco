@@ -1,7 +1,7 @@
 module EditorBasic where
 
 import Control.Monad.Aff (Aff)
-import Control.Monad.Aff (runAff)
+import Control.Monad.Aff (Aff, launchAff_)
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Class (liftEff)
 import Control.Monad.Eff.Exception (EXCEPTION)
@@ -47,14 +47,7 @@ main
         | e )
       Unit
 main =  U.onLoad do 
-        runAff handleError handleValue editor
-  where
-    handleError :: forall a. Error -> Eff a Unit
-    handleError e = 
-      --trace (maybe "unknown error" id (stack e)) pure
-      pure unit
-      
-    handleValue :: forall a b. b -> Eff a Unit
-    handleValue e = pure unit
+        launchAff_ editor
+  
   
   

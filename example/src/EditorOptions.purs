@@ -3,7 +3,7 @@ where
   
 import Monaco.Types
 
-import Control.Monad.Aff (Aff)
+import Control.Monad.Aff (Aff, launchAff_)
 import Control.Monad.Aff (runAff)
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Class (liftEff)
@@ -14,8 +14,8 @@ import DOM.Event.TouchEvent (targetTouches)
 import DOM.Node.Types (ElementId(..))
 import Data.Maybe (Maybe(..))
 import Monaco.Editor as ME
-import Monaco.Types as MT
 import Monaco.Types (MONACO)
+import Monaco.Types as MT
 import Prelude (Unit, bind, pure, unit, ($))
 import Utils as U
 
@@ -136,14 +136,7 @@ main
         | e )
       Unit
 main =  U.onLoad do 
-        runAff handleError handleValue editor
-  where
-    handleError :: forall a. Error -> Eff a Unit
-    handleError e = 
-      --trace (maybe "unknown error" id (stack e)) pure
-      pure unit
-      
-    handleValue :: forall a b. b -> Eff a Unit
-    handleValue e = pure unit
+        launchAff_ editor
+ 
   
   
